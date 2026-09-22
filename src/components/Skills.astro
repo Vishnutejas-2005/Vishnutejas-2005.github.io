@@ -1,0 +1,38 @@
+---
+import SectionHead from './SectionHead.astro';
+import { skills } from '../data/resume';
+---
+
+<section id="skills" class="section">
+  <div class="wrap">
+    <SectionHead title="Toolkit" meta="math → code → metal" />
+
+    <div class="sk">
+      {skills.map((s) => (
+        <div class="sk__col card reveal">
+          <h3 class="sk__g">{s.group}</h3>
+          <ul class="tags">{s.items.map((it) => <li class="tag">{it}</li>)}</ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .sk {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+  @media (max-width: 860px) {
+    .sk { grid-template-columns: minmax(0, 1fr); }
+  }
+  .sk__col { padding: 22px 22px 24px; }
+  .sk__g {
+    margin: 0 0 18px;
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+</style>

@@ -1,0 +1,110 @@
+---
+import { profile, socials } from '../data/resume';
+const year = new Date().getFullYear();
+---
+
+<section id="contact" class="section contact">
+  <div class="wrap">
+    <div class="contact__card card reveal">
+      <h2 class="contact__title display">Let’s talk <em>models, markets</em> or memory bandwidth.</h2>
+
+      <div class="contact__grid">
+        <div>
+          <p class="contact__label label">Email</p>
+          {profile.emails.map((e) => (
+            <a class="contact__mail" href={`mailto:${e}`}>{e}</a>
+          ))}
+        </div>
+        <div>
+          <p class="contact__label label">Elsewhere</p>
+          <ul class="contact__socials">
+            {socials.map((s) => (
+              <li>
+                <a href={s.href} target="_blank" rel="noreferrer">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d={s.path} /></svg>
+                  <span>{s.label}</span>
+                  <span class="contact__handle mono">{s.handle}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot mono">
+      <span>© {year} J S Vishnu Teja</span>
+      <a href="#top">back to top ↑</a>
+    </footer>
+  </div>
+</section>
+
+<style>
+  .contact__card {
+    padding: clamp(28px, 5vw, 56px);
+    background:
+      radial-gradient(90% 120% at 0% 100%, var(--accent-soft), transparent 60%),
+      var(--surface);
+  }
+  .contact__title {
+    margin: 0;
+    max-width: 16em;
+    font-size: clamp(2rem, 4.6vw, 3.5rem);
+    line-height: 1.05;
+    color: var(--text);
+    text-wrap: balance;
+  }
+  .contact__title em { color: var(--accent); }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+    margin-top: clamp(28px, 4vw, 44px);
+  }
+  @media (max-width: 720px) {
+    .contact__grid { grid-template-columns: minmax(0, 1fr); }
+  }
+  .contact__label { margin: 0 0 12px; }
+
+  .contact__mail {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    color: var(--text);
+    padding: 4px 0;
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.3s, color 0.2s;
+  }
+  .contact__mail:hover { background-size: 100% 1px; color: var(--accent); }
+
+  .contact__socials { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .contact__socials a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    color: var(--text);
+    font-weight: 700;
+    transition: color 0.2s;
+  }
+  .contact__socials a:hover { color: var(--accent); }
+  .contact__handle { margin-left: auto; font-size: var(--fs-label); color: var(--muted); font-weight: 500; }
+
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 36px 0 40px;
+    font-size: var(--fs-label);
+    color: var(--muted);
+  }
+  .foot a:hover { color: var(--accent); }
+</style>

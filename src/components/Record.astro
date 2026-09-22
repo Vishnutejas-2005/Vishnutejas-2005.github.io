@@ -1,0 +1,148 @@
+---
+import SectionHead from './SectionHead.astro';
+import { achievements, education, coursework } from '../data/resume';
+
+const gradeClass = (g: string) => (g.includes('A+') ? 'gr--top' : g.startsWith('A') ? 'gr--a' : 'gr--b');
+---
+
+<section id="record" class="section">
+  <div class="wrap">
+    <SectionHead title="Record" meta="exams, olympiads & education" />
+
+    <div class="rec">
+      <div class="rec__col">
+        <h3 class="rec__sub">Achievements</h3>
+        <ol class="ledger">
+          {achievements.map((a) => (
+            <li class="ledger__row reveal">
+              <span class="ledger__year label">{a.year}</span>
+              <span class="ledger__what">
+                <b>{a.title}</b>
+                <span>{a.note}</span>
+              </span>
+              <span class="ledger__res figure">{a.result}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div class="rec__col">
+        <h3 class="rec__sub">Education</h3>
+        <div class="edu">
+          {education.map((e) => (
+            <div class="edu__row card reveal">
+              <div>
+                <p class="edu__year label">{e.year}</p>
+                <p class="edu__deg">{e.degree}</p>
+                <p class="edu__inst">{e.institute}</p>
+              </div>
+              <div class="edu__score">
+                <span class="figure">{e.score}</span>
+                <span class="label">{e.scoreLabel}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="rec__sub" style="margin-top: 36px;">Quantitative coursework</h3>
+        <ul class="courses reveal">
+          {coursework.map((c) => (
+            <li class="course">
+              <span>{c.name}</span>
+              <span class:list={['gr', gradeClass(c.grade)]}>{c.grade}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rec {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 64px);
+  }
+  @media (max-width: 900px) {
+    .rec { grid-template-columns: minmax(0, 1fr); }
+  }
+  /* \subsection */
+  .rec__sub {
+    margin: 0 0 16px;
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .ledger { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .ledger__row {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+    gap: 16px;
+    align-items: center;
+    padding: 16px 4px;
+    border-bottom: 1px solid var(--line);
+    transition: background 0.2s;
+  }
+  .ledger__row:hover { background: var(--line-soft); }
+  .ledger__what { display: grid; gap: 2px; font-size: var(--fs-body); line-height: 1.4; }
+  .ledger__what span { font-size: var(--fs-small); color: var(--muted); }
+  .ledger__res { font-size: clamp(1.375rem, 2.2vw, 1.75rem); color: var(--accent); white-space: nowrap; }
+  @media (max-width: 520px) {
+    .ledger__row { grid-template-columns: 48px minmax(0, 1fr); row-gap: 8px; align-items: start; }
+    .ledger__year { padding-top: 3px; }
+    .ledger__res { grid-column: 2; }
+  }
+
+  .edu { display: grid; gap: 12px; }
+  .edu__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+  }
+  .edu__row p { margin: 0; }
+  .edu__deg { margin-top: 6px !important; font-weight: 700; color: var(--text); font-size: var(--fs-body); line-height: 1.35; }
+  .edu__inst { font-size: var(--fs-small); }
+  .edu__score { display: grid; justify-items: end; }
+  .edu__score .figure { font-size: 2.125rem; color: var(--text); white-space: nowrap; }
+  .edu__score .label { margin-top: 6px; }
+
+  .courses {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  @media (max-width: 480px) {
+    .courses { grid-template-columns: minmax(0, 1fr); }
+  }
+  .course {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    font-size: var(--fs-small);
+    line-height: 1.35;
+  }
+  .gr {
+    flex: none;
+    font-size: var(--fs-small);
+    font-weight: 700;
+    min-width: 2.4em;
+    text-align: center;
+    padding: 3px 7px;
+    border-radius: 6px;
+  }
+  .gr--top { background: var(--accent); color: var(--accent-ink); }
+  .gr--a { background: var(--accent-soft); color: var(--accent); }
+  .gr--b { background: var(--surface-2); color: var(--text-2); }
+</style>

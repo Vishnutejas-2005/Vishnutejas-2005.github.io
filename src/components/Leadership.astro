@@ -1,0 +1,62 @@
+---
+import SectionHead from './SectionHead.astro';
+import { positions } from '../data/resume';
+---
+
+<section id="leadership" class="section">
+  <div class="wrap">
+    <SectionHead title="Positions of responsibility" meta="clubs, fests & outreach" />
+
+    <ul class="por">
+      {positions.map((p) => (
+        <li class="por__row reveal">
+          <span class="por__date label">{p.dates}</span>
+          <div>
+            <p class="por__title"><span class="por__role sc">{p.role}</span> {p.event}</p>
+            <p class="por__note">{p.note}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .por {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(24px, 5vw, 56px);
+  }
+  @media (max-width: 820px) {
+    .por { grid-template-columns: minmax(0, 1fr); }
+  }
+  .por__row {
+    display: grid;
+    grid-template-columns: 118px minmax(0, 1fr);
+    gap: 14px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+  .por__row p { margin: 0; }
+  .por__date { padding-top: 4px; }
+  .por__title { font-size: var(--fs-body); color: var(--text); font-weight: 700; line-height: 1.45; }
+  .por__role {
+    display: inline-block;
+    font-size: var(--fs-small);
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 3px 7px;
+    border-radius: 6px;
+    margin-right: 6px;
+    vertical-align: 2px;
+  }
+  .por__note { margin-top: 6px !important; font-size: var(--fs-small); line-height: 1.6; }
+
+  @media (max-width: 480px) {
+    .por__row { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  }
+</style>

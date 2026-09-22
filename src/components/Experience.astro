@@ -1,0 +1,104 @@
+---
+import SectionHead from './SectionHead.astro';
+import { experience } from '../data/resume';
+---
+
+<section id="experience" class="section">
+  <div class="wrap">
+    <SectionHead title="Experience" meta={`${experience.length} research internships`} />
+
+    <ol class="xp">
+      {experience.map((job) => (
+        <li class="xp__item reveal">
+          <div class="xp__when">
+            <span class="label">{job.dates}</span>
+          </div>
+          <span class="xp__node" aria-hidden="true"></span>
+          <article class="xp__body card">
+            <header class="xp__head">
+              <div>
+                <h3 class="xp__org">{job.org}</h3>
+                <p class="xp__role"><em>{job.role}</em> <span>· {job.place}</span></p>
+              </div>
+              <ul class="tags">{job.tags.map((t) => <li class="tag">{t}</li>)}</ul>
+            </header>
+            <ul class="bullets">
+              {job.points.map((p) => <li set:html={p} />)}
+            </ul>
+          </article>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .xp {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 22px;
+    position: relative;
+  }
+  .xp__item {
+    display: grid;
+    grid-template-columns: 170px 28px minmax(0, 1fr);
+    position: relative;
+  }
+  /* The timeline spine runs through the node column. */
+  .xp__item::before {
+    content: "";
+    position: absolute;
+    left: calc(170px + 13.5px);
+    top: 0;
+    bottom: -22px;
+    width: 1px;
+    background: var(--line);
+  }
+  .xp__item:last-child::before { bottom: 0; }
+
+  .xp__when { padding-top: 29px; }
+  .xp__node {
+    position: relative;
+    z-index: 1;
+    width: 11px;
+    height: 11px;
+    margin: 30px auto 0;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+  }
+  .xp__item:first-child .xp__node { background: var(--accent); }
+
+  .xp__body { padding: clamp(20px, 3vw, 28px); transition: border-color 0.25s, transform 0.25s; }
+  .xp__body:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); transform: translateX(3px); }
+
+  .xp__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .xp__org {
+    margin: 0;
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: var(--text);
+    text-wrap: balance;
+  }
+  .xp__role { margin: 4px 0 0; font-size: var(--fs-body); font-weight: 500; color: var(--accent); }
+  .xp__role span { color: var(--muted); font-weight: 500; }
+
+  @media (max-width: 760px) {
+    .xp__item { grid-template-columns: 20px minmax(0, 1fr); }
+    .xp__item::before { left: 9.5px; }
+    .xp__when { grid-column: 2; grid-row: 1; padding: 0 0 8px; }
+    .xp__node { grid-column: 1; grid-row: 1; margin: 5px 0 0; }
+    .xp__body { grid-column: 2; }
+  }
+</style>

@@ -1,0 +1,290 @@
+/* ------------------------------------------------------------------
+   "Research notebook" design system.
+   Dark graphite by default, light "paper" theme via data-theme or OS.
+   ------------------------------------------------------------------ */
+
+:root {
+  --bg: #0f0f0d;
+  --bg-2: #161613;
+  --surface: #1a1a17;
+  --surface-2: #22221e;
+  --line: #2e2d28;
+  --line-soft: rgba(255, 244, 214, 0.06);
+  --grid: rgba(255, 244, 214, 0.035);
+
+  --text: #f3efe4;
+  --text-2: #cdc7b8;          /* CM strokes are thin: keep contrast high */
+  --muted: #938d7e;
+
+  --accent: #7aa7ff;          /* electric blue */
+  --accent-ink: #050b1f;
+  --accent-soft: rgba(122, 167, 255, 0.13);
+  --teal: #5fc4b4;            /* chart / secondary */
+  --teal-soft: rgba(95, 196, 180, 0.14);
+
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 18px 40px -24px rgba(0, 0, 0, 0.8);
+
+  /* Type: Computer Modern, the face of every LaTeX paper (and of the resume).
+     CMU Serif does everything; CMU Typewriter only for data — dates, units, tags.
+     CM ships two weights: 500 (regular) and 700 (bold). */
+  --serif: "CMU Serif", "Latin Modern Roman", "Computer Modern", Georgia, serif;
+  --mono: "CMU Typewriter Text", "Latin Modern Mono", ui-monospace, monospace;
+
+  /* Role scale — sized up because CM has a small x-height */
+  --fs-label: 0.8125rem;                                 /* 13  typewriter dates, labels */
+  --fs-small: 0.9375rem;                                 /* 15  tags, meta, notes */
+  --fs-body: 1.09375rem;                                 /* 17.5 body, bullets */
+  --fs-lead: clamp(1.1875rem, 1.5vw, 1.3125rem);         /* 19–21 pitch, summaries */
+  --fs-h3: clamp(1.25rem, 1.8vw, 1.4375rem);             /* 20–23 card titles */
+  --fs-h2: clamp(1.875rem, 3.4vw, 2.625rem);             /* 30–42 section titles */
+  --fs-num: clamp(2.25rem, 4.4vw, 3.25rem);              /* 36–52 figures */
+
+  --radius: 14px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --maxw: 1180px;
+
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f6f2e8;
+    --bg-2: #efe9dc;
+    --surface: #fbf8f1;
+    --surface-2: #f1ecdf;
+    --line: #ddd5c3;
+    --line-soft: rgba(60, 45, 10, 0.07);
+    --grid: rgba(60, 45, 10, 0.05);
+    --text: #1d1a13;
+    --text-2: #4d473a;
+    --muted: #857d6b;
+    --accent: #2c5fd6;
+    --accent-ink: #fffaf0;
+    --accent-soft: rgba(44, 95, 214, 0.09);
+    --teal: #1f7f72;
+    --teal-soft: rgba(31, 127, 114, 0.1);
+    --shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 18px 40px -28px rgba(60, 45, 10, 0.35);
+    color-scheme: light;
+  }
+}
+
+:root[data-theme="light"] {
+  --bg: #f6f2e8;
+  --bg-2: #efe9dc;
+  --surface: #fbf8f1;
+  --surface-2: #f1ecdf;
+  --line: #ddd5c3;
+  --line-soft: rgba(60, 45, 10, 0.07);
+  --grid: rgba(60, 45, 10, 0.05);
+  --text: #1d1a13;
+  --text-2: #4d473a;
+  --muted: #857d6b;
+  --accent: #2c5fd6;
+  --accent-ink: #fffaf0;
+  --accent-soft: rgba(44, 95, 214, 0.09);
+  --teal: #1f7f72;
+  --teal-soft: rgba(31, 127, 114, 0.1);
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 18px 40px -28px rgba(60, 45, 10, 0.35);
+  color-scheme: light;
+}
+
+/* ------------------------------------------------------------------ base */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+  scrollbar-color: var(--line) var(--bg);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-2);
+  font-family: var(--serif);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  line-height: 1.6;
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+  font-synthesis-weight: none;
+  counter-reset: sec;
+  overflow-x: hidden;
+}
+
+/* Graph paper, fading out toward the bottom of the first screen. */
+.paper {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1100px;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 70% 0%, #000 30%, transparent 75%);
+          mask-image: radial-gradient(ellipse 90% 70% at 70% 0%, #000 30%, transparent 75%);
+}
+
+a { color: inherit; text-decoration: none; }
+b, strong { color: var(--text); font-weight: 700; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.mono { font-family: var(--mono); letter-spacing: 0; }
+
+/* Title-page voice: large regular roman, italic for emphasis. */
+.display {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.02;
+}
+.display em { font-style: italic; }
+/* Figures: CM's lining numerals, as they'd sit in a results table. */
+.figure {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-variant-numeric: lining-nums tabular-nums;
+  line-height: 1;
+}
+/* Data labels: \texttt. */
+.label {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  color: var(--muted);
+}
+/* \textsc — synthesized small caps read fine in CM. */
+.sc { font-variant-caps: small-caps; letter-spacing: 0.03em; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ------------------------------------------------------------------ section heading
+   LaTeX \section: "1  Experience ──────── 2 research internships".
+   The number is a CSS counter, so reordering sections renumbers them. */
+
+.section { padding: clamp(56px, 9vw, 104px) 0 0; }
+
+.sec-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0 0 clamp(24px, 4vw, 40px);
+}
+.sec-head__title {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: var(--fs-h2);
+  line-height: 1.1;
+  color: var(--text);
+  text-wrap: balance;
+  counter-increment: sec;
+}
+.sec-head__title::before {
+  content: counter(sec);
+  display: inline-block;
+  min-width: 1.35em;
+  color: var(--accent);
+}
+.sec-head__rule {
+  height: 1px;
+  background: var(--line);
+  align-self: center;
+  transform: translateY(4px);
+}
+.sec-head__meta { white-space: nowrap; }
+@media (max-width: 560px) {
+  .sec-head { grid-template-columns: 1fr; row-gap: 8px; }
+  .sec-head__rule { display: none; }
+}
+
+/* ------------------------------------------------------------------ shared bits */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  line-height: 1;
+  padding: 7px 10px;
+  border-radius: 999px;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 1px solid var(--line-soft);
+}
+
+
+.bullets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+.bullets li {
+  position: relative;
+  padding-left: 20px;
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  max-width: 72ch;
+}
+.bullets li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.78em;
+  width: 8px;
+  height: 2px;
+  background: var(--accent);
+}
+
+/* ------------------------------------------------------------------ reveal on scroll */
+
+.reveal { opacity: 1; }
+.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.js .reveal.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+}
