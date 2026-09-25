@@ -8,8 +8,9 @@ export const profile = {
   institute: 'Indian Institute of Science, Bengaluru',
   classOf: 2027,
   pitch:
-    'I work where probability meets systems: quantizing networks onto on-device NPUs, rationing KV-cache memory for long-context LLMs, and stress-testing trading signals until the data-snooping falls out.',
+    'I work where probability meets systems: quantizing networks onto on-device NPUs, predicting credit distress from market data, filings and supply chains, and building LLM search on top of knowledge graphs.',
   emails: ['vishnutejas@iisc.ac.in', 'vishnuteja2045@gmail.com'],
+  phone: '+91 97425 90888',
 };
 
 export const socials = [
@@ -31,13 +32,6 @@ export const socials = [
     href: 'https://leetcode.com/u/vishnuteja_48/',
     path: 'M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z',
   },
-];
-
-export const stats = [
-  { value: '9.0', unit: '/10', label: 'CGPA at IISc' },
-  { value: '436', unit: 'AIR', label: 'JEE Advanced 2023' },
-  { value: '99.96', unit: '%ile', label: 'JEE Main 2023' },
-  { value: '77', unit: 'rank', label: 'KCET 2023, state' },
 ];
 
 export const experience = [
@@ -75,23 +69,57 @@ export type Project = {
   points: string[];
   tags: string[];
   href?: string;
+  cta?: string;
   featured?: boolean;
 };
 
 export const projects: Project[] = [
   {
-    title: 'Layer-Aware Adaptive KV Cache Management for LLM Inference',
-    context: 'IISc',
-    dates: 'Jan 2026',
-    metric: { value: '−40%', label: 'KV-cache memory, <1.3% accuracy drop' },
+    title: 'CrisisNet: Early Warning for Corporate Credit Distress',
+    context: 'E0 259 Data Analytics · IISc',
+    dates: 'Mar – Apr 2026',
+    metric: { value: '0.83', label: 'test ROC-AUC, vs 0.62 for the Altman Z-score' },
     summary:
-      'A KKT-constrained water-filling solver that gives each layer only as much KV-cache budget as it needs.',
+      'Flags financial distress across 40 S&P 500 energy companies by fusing market data, filing text and supply-chain contagion into one model.',
     points: [
-      'Tackled the memory bottleneck of long-context inference by allocating KV-cache budget per layer via a KKT-constrained water-filling solver.',
-      'Deployed FlashAttention tiling and chunked prefill to scale inference to 128K context on RTX 4090s.',
+      'Fused three signal modules into a LightGBM model: time-series credit features (Merton distance-to-default, volatility, FRED credit spreads), FinBERT and LDA signals from 10-K filings, and a supply-chain graph with DebtRank contagion.',
+      'Beat the Altman, Ohlson, Zmijewski and Merton baselines on held-out 2019–2025 data at 71% recall, with walk-forward cross-validation and bootstrap confidence intervals.',
+      'Served per-company health scores through a FastAPI endpoint and a Streamlit dashboard with SHAP explanations.',
     ],
-    tags: ['LLM inference', 'Convex optimization', 'FlashAttention', 'CUDA'],
-    featured: true,
+    tags: ['Credit risk', 'LightGBM', 'FinBERT', 'Network contagion'],
+    href: 'https://github.com/E0259-Data-Analytics/CrisisNet-E0259-Project',
+    cta: 'View on GitHub →',
+  },
+  {
+    title: 'BeeKurse: Conversational E-commerce on KURSE',
+    context: 'ADSAI Project · IISc · team of 7',
+    dates: 'Nov – Dec 2025',
+    summary:
+      'Shop by describing what you want in plain English, over WhatsApp, on top of KURSE, our neuro-symbolic inference engine.',
+    points: [
+      'Built on a tri-store architecture: SQLite for structured data, a Qdrant vector DB and a Memgraph knowledge graph, joined by a search orchestrator.',
+      'An LLM parser sorts each message into search, product Q&A, chat or cart actions; search runs four scoring paths in parallel, mixing vector similarity with knowledge-graph relations.',
+      'Small vendors update inventory by photographing handwritten notes, which OCR turns into catalogue entries.',
+    ],
+    tags: ['Knowledge graphs', 'Vector search', 'LLM agents', 'FastAPI', 'React'],
+    href: 'https://github.com/VarK-3077/BeeKurse',
+    cta: 'View on GitHub →',
+  },
+  {
+    title: 'CampusTrotter: Live Campus Shuttle Platform',
+    context: 'DS252 Cloud Computing · Supervised by Prof. Yogesh Simmhan',
+    dates: 'Aug 2025 – Dec 2025',
+    metric: { value: '~1.5 s', label: 'live shuttle updates to riders and admins' },
+    summary:
+      'A full-stack platform for IISc’s campus shuttles (TransVahan) connecting riders, drivers and administrators, with live tracking, seat occupancy and ETAs.',
+    points: [
+      'One React Native app with rider and driver modes: drivers push GPS and occupancy, riders see buses live on the map with seats and ETAs.',
+      'Express backend on Firestore streams vehicle, reservation and alert updates over WebSockets, with background jobs that build trip summaries and expire stale reservations.',
+      'React admin portal for routes, vehicles, driver assignments, alerts and analytics reports; backend containerised on AWS App Runner and infrastructure provisioned with Terraform.',
+    ],
+    tags: ['AWS', 'Firebase', 'WebSockets', 'React Native', 'Terraform'],
+    href: 'https://github.com/DS252-CampusTrotters/CampusTrotter',
+    cta: 'View on GitHub →',
   },
   {
     title: 'Bollinger Bands Strategy on NIFTY 50',
@@ -106,31 +134,6 @@ export const projects: Project[] = [
     ],
     tags: ['Time series', 'GARCH', 'XGBoost', 'Quant research'],
     featured: true,
-  },
-  {
-    title: 'Transvahan Cloud Shuttle System',
-    context: 'Supervised by Prof. Yogesh Simmhan',
-    dates: 'Aug 2025 – Dec 2025',
-    metric: { value: '500+', label: 'concurrent users, sub-second sync' },
-    summary:
-      'A cloud-native platform that tracks IISc’s campus shuttles and their seat occupancy in real time.',
-    points: [
-      'Architected on GCP with serverless functions and NoSQL storage.',
-      'Streamed vehicle GPS and seat occupancy over WebSockets instead of batch polling, keeping every client in sync with sub-second latency.',
-    ],
-    tags: ['GCP', 'Serverless', 'WebSockets', 'NoSQL'],
-  },
-  {
-    title: 'KURSE: Knowledge Retrieval & Summarisation Engine',
-    context: 'ADSAI Project · IISc',
-    dates: 'Sep – Dec 2025',
-    metric: { value: '>95%', label: 'target retrieval accuracy' },
-    summary:
-      'An agentic RAG pipeline over documents, images and audio, backed by a tri-layer store.',
-    points: [
-      'Combined SQL, a vector DB and a knowledge graph with semantic reranking and hallucination-avoidance, targeting <1% factual error.',
-    ],
-    tags: ['Agentic RAG', 'Knowledge graphs', 'Multi-modal'],
   },
   {
     title: 'Kolmogorov–Arnold Networks (KAN)',
@@ -153,65 +156,48 @@ export const projects: Project[] = [
     tags: ['Android', 'On-device', 'Privacy'],
     href: '/projects/coinflow',
   },
-];
-
-export const achievements = [
-  { year: '2023', title: 'JEE Advanced', result: 'AIR 436', note: 'out of ~180,000 qualified candidates (General)' },
-  { year: '2023', title: 'JEE Main', result: 'AIR 526', note: '99.96 percentile (General)' },
-  { year: '2023', title: 'KCET', result: 'Rank 77', note: 'State rank, Karnataka (General)' },
-  { year: '2021', title: 'National Chemistry Olympiad (HBCSE)', result: 'INChO Merit', note: 'among top performers nationally' },
-  { year: '2019', title: 'Regional Mathematics Olympiad', result: 'Top 30', note: 'selected in Karnataka' },
-  { year: '2017', title: 'Unified Cyber Olympiad', result: 'Top 20', note: 'National Merit Awardee, India' },
-];
-
-export const education = [
   {
-    year: '2027',
-    degree: 'B.Tech in Mathematics and Computing',
-    institute: 'Indian Institute of Science (IISc)',
-    score: '9 / 10',
-    scoreLabel: 'CGPA',
+    title: 'Layer-Aware Adaptive KV Cache Management for LLM Inference',
+    context: 'IISc',
+    dates: 'Jan 2026',
+    metric: { value: '−40%', label: 'KV-cache memory, <1.3% accuracy drop' },
+    summary:
+      'A KKT-constrained water-filling solver that gives each layer only as much KV-cache budget as it needs.',
+    points: [
+      'Tackled the memory bottleneck of long-context inference by allocating KV-cache budget per layer via a KKT-constrained water-filling solver.',
+      'Deployed FlashAttention tiling and chunked prefill to scale inference to 128K context on RTX 4090s.',
+    ],
+    tags: ['LLM inference', 'Convex optimization', 'FlashAttention', 'CUDA'],
+    featured: true,
   },
-  {
-    year: '2023',
-    degree: 'Class 12 (CBSE)',
-    institute: 'Narayana Olympiad School',
-    score: '95.6%',
-    scoreLabel: 'Board',
-  },
-];
-
-export const coursework = [
-  { name: 'Probability & Statistics', grade: 'A+' },
-  { name: 'Stochastic Models & Applications', grade: 'A+' },
-  { name: 'Numerical Methods', grade: 'A+' },
-  { name: 'Linear Algebra & Multivariable Calculus', grade: 'A, A+' },
-  { name: 'Linear & Non-Linear Optimization', grade: 'A' },
-  { name: 'Intro to AI/ML', grade: 'A' },
-  { name: 'Cloud Computing', grade: 'A' },
-  { name: 'Data Analytics', grade: 'A' },
-  { name: 'Compiler Design', grade: 'A' },
-  { name: 'Data Structures & Algorithms', grade: 'B+' },
-  { name: 'Applied Data Science & AI', grade: 'B+' },
-  { name: 'Systems for ML', grade: 'B+' },
 ];
 
 export const skills = [
   {
     group: 'Mathematics & Quant',
-    items: ['Probability', 'Stochastic Calculus', 'Time-Series Analysis', 'Convex Optimization', 'Statistical Inference'],
+    items: ['Probability', 'Time-Series Analysis', 'Convex Optimization', 'Statistical Inference', 'Credit Risk Modelling'],
   },
   {
     group: 'Programming',
-    items: ['C++', 'Python', 'NumPy', 'Pandas', 'PyTorch', 'SciPy', 'SQL'],
+    items: ['C++', 'Python', 'SQL', 'JavaScript / TypeScript', 'NumPy', 'Pandas', 'PyTorch', 'SciPy'],
   },
   {
-    group: 'Systems & ML',
-    items: ['CUDA', 'Triton', 'LLVM', 'FlashAttention', 'Linux / Bash', 'GCP', 'Low-Latency Networking', 'Memory Profiling'],
+    group: 'ML & AI',
+    items: ['XGBoost / LightGBM', 'FinBERT & NLP', 'LLM Agents', 'Vector Search (Qdrant)', 'Knowledge Graphs (Memgraph)', 'SHAP', 'FlashAttention'],
+  },
+  {
+    group: 'Systems & Cloud',
+    items: ['CUDA', 'Triton', 'LLVM', 'Linux / Bash', 'AWS', 'Firebase', 'Docker', 'Terraform', 'FastAPI', 'Node.js', 'React / React Native', 'WebSockets'],
   },
 ];
 
 export const positions = [
+  {
+    role: 'Accommodation Co-ordinator',
+    event: 'Pravega, IISc 2026',
+    dates: 'Feb 2026',
+    note: 'Managed accommodation for 250+ participants.',
+  },
   {
     role: 'Team Lead',
     event: 'CAPTCHA Exhibit, IISc Open Day 2025',
@@ -229,12 +215,6 @@ export const positions = [
     event: 'Carvaan Pravega, Bangalore',
     dates: 'Oct 2024',
     note: 'Handled event logistics and participant coordination for the outreach event.',
-  },
-  {
-    role: 'Volunteer',
-    event: 'GAME-ARTS Symposium, Dept. of CSA',
-    dates: 'Jul 2024',
-    note: 'Helped organize the Game Theory Lab’s symposium on game theory, mechanism design and AI.',
   },
   {
     role: 'Student Volunteer',

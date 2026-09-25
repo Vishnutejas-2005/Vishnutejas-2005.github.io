@@ -1,6 +1,5 @@
 ---
-import BandsChart from './BandsChart.astro';
-import { profile, stats } from '../data/resume';
+import { profile } from '../data/resume';
 ---
 
 <section id="top" class="hero">
@@ -8,7 +7,7 @@ import { profile, stats } from '../data/resume';
     <div class="hero__grid">
       <div class="hero__text">
         <h1 class="hero__name display">
-          J S Vishnu <em>Teja</em>
+          JS Vishnu <em>Teja</em>
         </h1>
         <p class="hero__role sc">
           <span class="hero__live" aria-hidden="true"></span>
@@ -26,22 +25,10 @@ import { profile, stats } from '../data/resume';
         </div>
       </div>
 
-      <div class="hero__chart">
-        <BandsChart />
-      </div>
+      <figure class="hero__photo card">
+        <img src="/vishnu.png" alt="J S Vishnu Teja in a lecture hall" width="878" height="735" />
+      </figure>
     </div>
-
-    <dl class="stats">
-      {stats.map((s) => (
-        <div class="stat">
-          <dt class="label">{s.label}</dt>
-          <dd>
-            <span class="stat__v figure">{s.value}</span>
-            <span class="stat__u label">{s.unit}</span>
-          </dd>
-        </div>
-      ))}
-    </dl>
   </div>
 </section>
 
@@ -56,6 +43,18 @@ import { profile, stats } from '../data/resume';
   }
   @media (max-width: 980px) {
     .hero__grid { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  .hero__photo {
+    margin: 0;
+    padding: 10px;
+    overflow: hidden;
+  }
+  .hero__photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: calc(var(--radius) - 6px);
   }
 
   .hero__text { container-type: inline-size; }
@@ -121,25 +120,4 @@ import { profile, stats } from '../data/resume';
   .btn--ghost:hover { border-color: var(--accent); color: var(--accent); }
   .btn--ghost .mono { font-size: 0.8125rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; }
 
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    margin: clamp(40px, 6vw, 72px) 0 0;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-  }
-  .stat { padding: 20px clamp(12px, 2vw, 24px) 18px; }
-  .stat + .stat { border-left: 1px solid var(--line); }
-  .stat dt { margin: 0; }
-  .stat dd { margin: 6px 0 0; display: flex; align-items: baseline; gap: 6px; }
-  .stat dd { margin-top: 10px; flex-wrap: wrap; row-gap: 4px; }
-  .stat__v { font-size: var(--fs-num); color: var(--text); }
-  .stat__u { color: var(--accent); }
-  .stat dt { font-size: var(--fs-label); }
-
-  @media (max-width: 720px) {
-    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .stat:nth-child(3) { border-left: 0; }
-    .stat:nth-child(n + 3) { border-top: 1px solid var(--line); }
-  }
 </style>

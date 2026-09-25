@@ -6,7 +6,8 @@ const year = new Date().getFullYear();
 <section id="contact" class="section contact">
   <div class="wrap">
     <div class="contact__card card reveal">
-      <h2 class="contact__title display">Let’s talk <em>models, markets</em> or memory bandwidth.</h2>
+      <h2 class="contact__title display">Let’s talk <em>probability, proofs</em> or a series worth rewatching.</h2>
+      <p class="contact__aside">Off the clock, I do maths for its own sake: probability puzzles, analysis, and counting problems in permutations and combinations that give way to one clean argument. I love organic chemistry too, especially working through reaction mechanisms step by step. And I watch films and series built in layers, where every rewatch turns up something the previous one hid.</p>
 
       <div class="contact__grid">
         <div>
@@ -14,6 +15,8 @@ const year = new Date().getFullYear();
           {profile.emails.map((e) => (
             <a class="contact__mail" href={`mailto:${e}`}>{e}</a>
           ))}
+          <p class="contact__label contact__label--gap label">Phone</p>
+          <a class="contact__mail" href={`tel:${profile.phone.replace(/\s/g, '')}`}>{profile.phone}</a>
         </div>
         <div>
           <p class="contact__label label">Elsewhere</p>
@@ -55,6 +58,14 @@ const year = new Date().getFullYear();
     text-wrap: balance;
   }
   .contact__title em { color: var(--accent); }
+  .contact__aside {
+    margin: 18px 0 0;
+    max-width: 52ch;
+    font-size: var(--fs-lead);
+    line-height: 1.6;
+    color: var(--text-2);
+    text-wrap: pretty;
+  }
 
   .contact__grid {
     display: grid;
@@ -66,6 +77,7 @@ const year = new Date().getFullYear();
     .contact__grid { grid-template-columns: minmax(0, 1fr); }
   }
   .contact__label { margin: 0 0 12px; }
+  .contact__label--gap { margin-top: 24px; }
 
   .contact__mail {
     display: block;

@@ -14,6 +14,7 @@ import { projects } from '../data/resume';
           <Tag
             class:list={['pj__card card reveal', { 'pj__card--wide': p.featured, 'pj__card--link': p.href }]}
             href={p.href}
+            {...(p.href?.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
           >
             <p class="pj__dates label">{p.dates}</p>
 
@@ -42,7 +43,7 @@ import { projects } from '../data/resume';
 
             <ul class="tags pj__tags">{p.tags.map((t) => <li class="tag">{t}</li>)}</ul>
 
-            {p.href && <span class="pj__cta">Read the case study →</span>}
+            {p.href && <span class="pj__cta">{p.cta ?? 'Read the case study →'}</span>}
           </Tag>
         );
       })}

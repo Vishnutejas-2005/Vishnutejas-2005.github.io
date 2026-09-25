@@ -11,7 +11,6 @@ const base = home ? '' : '/';
 const links = [
   { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Projects' },
-  { id: 'record', label: 'Record' },
   { id: 'skills', label: 'Toolkit' },
   { id: 'leadership', label: 'Leadership' },
   { id: 'contact', label: 'Contact' },
@@ -21,7 +20,7 @@ const links = [
 <header class="nav">
   <div class="wrap nav__inner">
     <a href={home ? '#top' : '/'} class="nav__mark" aria-label="J S Vishnu Teja, home">
-      <span class="display"><em>jsv</em></span><span class="nav__dot">.</span>
+      <span class="display"><em>jsv<span class="nav__t">t</span></em></span>
     </a>
 
     <nav class="nav__links" aria-label="Sections">
@@ -74,6 +73,7 @@ const links = [
     color: var(--text);
     line-height: 1;
   }
+  .nav__t { color: var(--accent); }
   .nav__dot { color: var(--accent); font-weight: 700; font-size: 1.625rem; }
 
   .nav__links {
