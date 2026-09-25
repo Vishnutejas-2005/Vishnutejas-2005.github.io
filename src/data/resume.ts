@@ -31,7 +31,6 @@ export const socials = [
 export const experience = [
   {
     org: 'Samsung R&D Institute India',
-    place: 'Noida',
     role: 'Research Intern',
     dates: 'May 2026 – Jul 2026',
     tags: ['Quantization', 'On-device NPU', 'Agentic data'],

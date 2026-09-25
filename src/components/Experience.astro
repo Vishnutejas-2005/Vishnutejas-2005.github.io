@@ -18,7 +18,7 @@ import { experience } from '../data/resume';
             <header class="xp__head">
               <div>
                 <h3 class="xp__org">{job.org}</h3>
-                <p class="xp__role"><em>{job.role}</em> <span>· {job.place}</span></p>
+                <p class="xp__role"><em>{job.role}</em>{job.place && <span> · {job.place}</span>}</p>
               </div>
               <ul class="tags">{job.tags.map((t) => <li class="tag">{t}</li>)}</ul>
             </header>
